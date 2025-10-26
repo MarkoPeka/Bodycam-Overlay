@@ -28,7 +28,7 @@ A professional, customizable bodycam overlay for live streaming and roleplay con
 
 ### For End Users (Packaged Version)
 
-1. **Download** [BodycamOverlay-v0.1.0-win64.zip](DOWNLOAD_LINK_HERE) (~104MB)
+1. **Download** [BodycamOverlay-v0.1.0-win64.zip](https://github.com/MarkoPeka/Bodycam-Overlay/releases/tag/Releases) (~104MB)
 2. **Extract** the ZIP file to any folder
 3. **Run** `BodycamOverlay.exe` from the extracted folder
 

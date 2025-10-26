@@ -1,0 +1,161 @@
+============================================
+   BODYCAM OVERLAY - DISTRIBUTION READY!
+============================================
+
+Created by: marko28peka
+Discord: marko28peka
+100% Human Coded - Handcrafted with care
+
+✅ YOUR APP IS PACKAGED AND READY TO SHARE!
+
+📦 WHAT WAS CREATED:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. STANDALONE EXE:
+   Location: dist\BodycamOverlay-win32-x64\BodycamOverlay.exe
+   - No installation required
+   - All dependencies included
+   - Works on any Windows 10/11 PC
+
+2. READY-TO-SHARE ZIP:
+   File: dist\BodycamOverlay-v0.1.0-Windows.zip
+   Size: ~105 MB
+   - Compressed and optimized
+   - Ready to upload anywhere
+   - Includes README.txt for users
+
+🚀 HOW TO SHARE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Upload the ZIP
+------------------------
+Choose one:
+  • Google Drive (drive.google.com)
+  • Dropbox (dropbox.com)
+  • MediaFire (mediafire.com)
+  • GitHub Releases (if you have a repo)
+  • WeTransfer (wetransfer.com)
+
+STEP 2: Get Shareable Link
+---------------------------
+  • Make sure link is set to "Anyone with link can view"
+  • Copy the download link
+
+STEP 3: Share!
+---------------
+Post the link with this description:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎥 BODYCAM OVERLAY v0.1.0
+👨‍💻 Created by marko28peka | Discord: marko28peka
+👍 100% Human Coded - No AI, Pure Craftsmanship
+
+A customizable, always-on-top bodycam overlay 
+for streaming, recording, and roleplay!
+
+✨ FEATURES:
+• Customizable name & role (Police/Criminal/Civilian)
+• 60+ timezones worldwide
+• Custom logo support (paste any image URL)
+• Adjustable overlay size (200-800px wide)
+• Real-time clock with timezone display
+• Always stays on top of other windows
+• Settings are automatically saved
+
+📥 DOWNLOAD:
+[YOUR LINK HERE]
+
+🖥️ HOW TO USE:
+1. Download and extract the ZIP
+2. Run BodycamOverlay.exe
+3. Configure your settings
+4. Click "Start Overlay"
+5. Done!
+
+💻 Requirements: Windows 10/11
+📦 Size: 105MB
+🆓 100% FREE - No ads, no subscriptions
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👥 WHAT USERS NEED TO KNOW:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ NO technical knowledge required
+✅ NO Node.js or npm needed
+✅ NO installation process
+✅ NO admin rights required
+✅ Just download, extract, and run!
+
+⚠️ Windows SmartScreen Warning:
+--------------------------------
+Users might see a warning on first run because 
+the app isn't digitally signed. This is normal!
+
+Tell them to:
+  1. Click "More info"
+  2. Click "Run anyway"
+
+This only happens once.
+
+📊 FILE DETAILS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ZIP File:
+  • Name: BodycamOverlay-v0.1.0-Windows.zip
+  • Size: ~105 MB (compressed)
+  • Contains: Standalone EXE + all dependencies
+
+Extracted Size:
+  • ~250 MB (normal for Electron apps)
+
+🎯 PERFECT FOR:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Twitch/YouTube streamers
+✓ Content creators
+✓ GTA RP / FiveM servers
+✓ Any roleplay community
+✓ Recording gameplay
+✓ Professional production
+
+🔄 FUTURE UPDATES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To create updated versions:
+  1. Make your changes in the code
+  2. Run: npm run package
+  3. Run: create-zip.ps1
+  4. Upload new version with new version number
+     (e.g., BodycamOverlay-v0.2.0-Windows.zip)
+
+📝 SUPPORT TIPS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Common Questions:
+
+Q: Overlay not showing?
+A: Restart the app
+
+Q: Wrong timezone?
+A: Check timezone selection in settings
+
+Q: Logo not loading?
+A: Make sure URL is a direct image link
+   (should end in .png, .jpg, .gif, etc.)
+
+Q: Can I use my own logo?
+A: Yes! Just paste any image URL
+
+Q: Do settings save?
+A: Yes! Settings are remembered between uses
+
+============================================
+   🎉 CONGRATULATIONS!
+   Your app is ready to share with the world!
+============================================
+
+Your files are in:
+C:\Users\marko\bodycam-overlay-app\dist\
+
+Next step: Upload and share! 🚀
+============================================

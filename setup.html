@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bodycam Overlay Setup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 40px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #0096ff;
+      font-size: 2em;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.9em;
+      margin-bottom: 25px;
+      opacity: 0.8;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #0096ff;
+      box-shadow: 0 0 10px rgba(0, 150, 255, 0.3);
+    }
+
+    select option {
+      background: #16213e;
+      color: #fff;
+    }
+
+    .role-selector {
+      display: flex;
+      gap: 15px;
+      margin-top: 8px;
+    }
+
+    .role-option {
+      flex: 1;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .role-option:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .role-option.active {
+      border-color: #0096ff;
+      background: rgba(0, 150, 255, 0.2);
+    }
+
+    .role-option.police.active {
+      border-color: #0096ff;
+      background: rgba(0, 150, 255, 0.2);
+    }
+
+    .role-option.criminal.active {
+      border-color: #ff4444;
+      background: rgba(255, 68, 68, 0.2);
+    }
+
+    .role-option.civilian.active {
+      border-color: #00ff88;
+      background: rgba(0, 255, 136, 0.2);
+    }
+
+    .role-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .role-text {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    button {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-start {
+      background: linear-gradient(135deg, #0096ff, #0077cc);
+      color: white;
+    }
+
+    .btn-start:hover {
+      background: linear-gradient(135deg, #0077cc, #005599);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 150, 255, 0.4);
+    }
+
+    .btn-preview {
+      background: linear-gradient(135deg, #666, #555);
+      color: white;
+    }
+
+    .btn-preview:hover {
+      background: linear-gradient(135deg, #777, #666);
+      transform: translateY(-2px);
+    }
+
+    .preview-area {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-title {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .preview-overlay {
+      background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(20,20,20,0.65) 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 14px;
+      position: relative;
+      backdrop-filter: blur(6px);
+      font-family: "OCR A Std", ui-monospace, Menlo, Consolas, "Roboto Mono", monospace;
+      font-size: 12px;
+    }
+
+    .preview-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.2;
+      margin-bottom: 3px;
+    }
+
+    .preview-rec-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ff4444 0%, #cc0000 100%);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .preview-rec-text {
+      color: #ff5555;
+      font-weight: 800;
+    }
+
+    .preview-name {
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .preview-name.police { color: #00aaff; }
+    .preview-name.criminal { color: #ff3333; }
+    .preview-name.civilian { color: #00ff99; }
+
+    .preview-dept, .preview-time {
+      color: #ffffff;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .preview-sep {
+      color: #0096ff;
+      opacity: 0.6;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎥 Bodycam Overlay</h1>
+    <div class="subtitle">Professional streaming overlay for roleplay</div>
+    
+    <form id="setupForm">
+      <div class="form-group">
+        <label for="name">Character Name:</label>
+        <input type="text" id="name" placeholder="e.g., [NOOSE] John Doe" required>
+      </div>
+
+      <div class="form-group">
+        <label>Role:</label>
+        <div class="role-selector">
+          <div class="role-option police" data-role="police">
+            <span class="role-icon">👮</span>
+            <span class="role-text">Police</span>
+          </div>
+          <div class="role-option criminal" data-role="criminal">
+            <span class="role-icon">🔫</span>
+            <span class="role-text">Criminal</span>
+          </div>
+          <div class="role-option civilian" data-role="civilian">
+            <span class="role-icon">👤</span>
+            <span class="role-text">Civilian</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="department">Department/Organization:</label>
+        <input type="text" id="department" placeholder="e.g., Los Santos Police Department">
+      </div>
+
+      <div class="form-group">
+        <label for="headerText">Camera Header Text:</label>
+        <input type="text" id="headerText" placeholder="e.g., CnR Body Cam 1™" value="CnR Body Cam 1™">
+        <small style="color: #aaa; font-size: 12px; margin-top: 5px; display: block;">📹 The text shown next to REC (e.g., "Police Body Cam", "Sheriff Cam 1")</small>
+      </div>
+
+      <div class="form-group">
+        <label for="timezone">Timezone:</label>
+        <select id="timezone">
+          <optgroup label="North America">
+            <option value="America/New_York">Eastern Time (ET)</option>
+            <option value="America/Chicago">Central Time (CT)</option>
+            <option value="America/Denver">Mountain Time (MT)</option>
+            <option value="America/Phoenix">Arizona (MST)</option>
+            <option value="America/Los_Angeles">Pacific Time (PT)</option>
+            <option value="America/Anchorage">Alaska (AKT)</option>
+            <option value="Pacific/Honolulu">Hawaii (HST)</option>
+            <option value="America/Toronto">Toronto (ET)</option>
+            <option value="America/Vancouver">Vancouver (PT)</option>
+            <option value="America/Mexico_City">Mexico City (CST)</option>
+          </optgroup>
+          <optgroup label="Europe">
+            <option value="Europe/London">London (GMT)</option>
+            <option value="Europe/Paris">Paris (CET)</option>
+            <option value="Europe/Prague">Prague (CET)</option>
+            <option value="Europe/Berlin">Berlin (CET)</option>
+            <option value="Europe/Amsterdam">Amsterdam (CET)</option>
+            <option value="Europe/Brussels">Brussels (CET)</option>
+            <option value="Europe/Madrid">Madrid (CET)</option>
+            <option value="Europe/Rome">Rome (CET)</option>
+            <option value="Europe/Vienna">Vienna (CET)</option>
+            <option value="Europe/Warsaw">Warsaw (CET)</option>
+            <option value="Europe/Stockholm">Stockholm (CET)</option>
+            <option value="Europe/Copenhagen">Copenhagen (CET)</option>
+            <option value="Europe/Oslo">Oslo (CET)</option>
+            <option value="Europe/Helsinki">Helsinki (EET)</option>
+            <option value="Europe/Athens">Athens (EET)</option>
+            <option value="Europe/Istanbul">Istanbul (TRT)</option>
+            <option value="Europe/Moscow">Moscow (MSK)</option>
+          </optgroup>
+          <optgroup label="Asia">
+            <option value="Asia/Dubai">Dubai (GST)</option>
+            <option value="Asia/Karachi">Karachi (PKT)</option>
+            <option value="Asia/Kolkata">India (IST)</option>
+            <option value="Asia/Bangkok">Bangkok (ICT)</option>
+            <option value="Asia/Singapore">Singapore (SGT)</option>
+            <option value="Asia/Hong_Kong">Hong Kong (HKT)</option>
+            <option value="Asia/Shanghai">Shanghai (CST)</option>
+            <option value="Asia/Tokyo">Tokyo (JST)</option>
+            <option value="Asia/Seoul">Seoul (KST)</option>
+            <option value="Asia/Manila">Manila (PHT)</option>
+            <option value="Asia/Jakarta">Jakarta (WIB)</option>
+          </optgroup>
+          <optgroup label="Oceania">
+            <option value="Australia/Perth">Perth (AWST)</option>
+            <option value="Australia/Adelaide">Adelaide (ACST)</option>
+            <option value="Australia/Brisbane">Brisbane (AEST)</option>
+            <option value="Australia/Sydney">Sydney (AEDT)</option>
+            <option value="Australia/Melbourne">Melbourne (AEDT)</option>
+            <option value="Pacific/Auckland">Auckland (NZDT)</option>
+          </optgroup>
+          <optgroup label="South America">
+            <option value="America/Sao_Paulo">São Paulo (BRT)</option>
+            <option value="America/Buenos_Aires">Buenos Aires (ART)</option>
+            <option value="America/Santiago">Santiago (CLT)</option>
+            <option value="America/Lima">Lima (PET)</option>
+            <option value="America/Bogota">Bogotá (COT)</option>
+          </optgroup>
+          <optgroup label="Africa">
+            <option value="Africa/Cairo">Cairo (EET)</option>
+            <option value="Africa/Johannesburg">Johannesburg (SAST)</option>
+            <option value="Africa/Lagos">Lagos (WAT)</option>
+            <option value="Africa/Nairobi">Nairobi (EAT)</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="logoUrl">Logo URL (Optional):</label>
+        <input type="url" id="logoUrl" placeholder="https://example.com/logo.png">
+        <small style="color: #aaa; font-size: 12px; margin-top: 5px; display: block;">💡 Leave empty for default NOOSE logo, or paste any image URL</small>
+      </div>
+
+      <div class="form-group">
+        <label>Overlay Size:</label>
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 1;">
+            <label for="overlayWidth" style="font-size: 12px; color: #ccc;">Width (px):</label>
+            <input type="number" id="overlayWidth" min="200" max="800" value="380" style="margin-top: 5px;">
+          </div>
+          <div style="flex: 1;">
+            <label for="overlayHeight" style="font-size: 12px; color: #ccc;">Height (px):</label>
+            <input type="number" id="overlayHeight" min="100" max="400" value="130" style="margin-top: 5px;">
+          </div>
+        </div>
+        <small style="color: #aaa; font-size: 12px; margin-top: 5px; display: block;">📊 Recommended: 380x130px (default) or 450x150px (larger)</small>
+      </div>
+
+      <div class="form-group">
+        <label>Position:</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+          <div>
+            <label style="font-size: 12px; color: #ccc; margin-bottom: 5px; display: block;">Horizontal:</label>
+            <select id="positionX" style="width: 100%;">
+              <option value="right">Right</option>
+              <option value="left">Left</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 12px; color: #ccc; margin-bottom: 5px; display: block;">Vertical:</label>
+            <select id="positionY" style="width: 100%;">
+              <option value="top">Top</option>
+              <option value="bottom">Bottom</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <label for="marginX" style="font-size: 12px; color: #ccc;">Edge distance X (px):</label>
+            <input type="number" id="marginX" min="0" max="200" value="10" style="margin-top: 5px;">
+          </div>
+          <div>
+            <label for="marginY" style="font-size: 12px; color: #ccc;">Edge distance Y (px):</label>
+            <input type="number" id="marginY" min="0" max="200" value="10" style="margin-top: 5px;">
+          </div>
+        </div>
+        <div style="margin-top: 10px; display: flex; gap: 10px;">
+          <button type="button" class="btn-preview" id="testPositionBtn" style="flex: 1;">👁️ Preview Position</button>
+          <button type="button" class="btn-start" id="applyPositionBtn" style="flex: 1;">✅ Apply Position</button>
+        </div>
+        <small style="color: #aaa; font-size: 12px; margin-top: 5px; display: block;">📍 Preview shows overlay at new position (starts overlay if needed). Apply saves position permanently.</small>
+      </div>
+
+      <div class="preview-area">
+        <div class="preview-title">Preview:</div>
+        <div class="preview-overlay">
+          <div class="preview-row">
+            <span class="preview-rec-dot"></span>
+            <span class="preview-rec-text">REC</span>
+            <span class="preview-sep">•</span>
+            <span style="color: #fff; font-weight: 600;">CnR Body Cam 1™</span>
+          </div>
+          <div class="preview-row">
+            <span class="preview-name" id="previewName">[NOOSE] Dimi</span>
+          </div>
+          <div class="preview-row">
+            <span class="preview-dept" id="previewDept">National Office Of Security Enforcement</span>
+          </div>
+          <div class="preview-row">
+            <span class="preview-time">21/10/2024 | 19:33:42 PM (GMT+01:00)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="btn-start">Start Overlay</button>
+      </div>
+      
+      <div style="text-align: center; margin-top: 15px;">
+        <small style="color: #777; font-size: 11px;">💡 Tip: Right-click system tray icon to toggle overlay</small>
+      </div>
+    </form>
+    
+    <div style="text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+      <small style="color: #888; font-size: 11px;">Made by <span style="color: #0096ff; font-weight: 600;">marko28peka</span> • <a href="#" style="color: #0096ff; text-decoration: none;" onclick="require('electron').shell.openExternal('https://discord.com'); return false;">Discord: marko28peka</a></small>
+      <br>
+      <small style="color: #666; font-size: 10px; margin-top: 5px; display: block;">v0.1.0 • Free for personal & commercial use</small>
+    </div>
+  </div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+    
+    let selectedRole = 'police';
+    
+    // Load saved config
+    async function loadConfig() {
+      const config = await ipcRenderer.invoke('load-config');
+      document.getElementById('name').value = config.name;
+      document.getElementById('department').value = config.department;
+      document.getElementById('timezone').value = config.timezone;
+      document.getElementById('logoUrl').value = config.logoUrl || '';
+      document.getElementById('headerText').value = config.headerText || 'CnR Body Cam 1™';
+      document.getElementById('overlayWidth').value = config.overlayWidth || 380;
+      document.getElementById('overlayHeight').value = config.overlayHeight || 130;
+      document.getElementById('positionX').value = config.positionX || 'right';
+      document.getElementById('positionY').value = config.positionY || 'top';
+      document.getElementById('marginX').value = config.marginX || 10;
+      document.getElementById('marginY').value = config.marginY || 10;
+      selectedRole = config.role;
+      
+      // Update role selection
+      document.querySelectorAll('.role-option').forEach(option => {
+        option.classList.remove('active');
+        if (option.dataset.role === selectedRole) {
+          option.classList.add('active');
+        }
+      });
+      
+      updatePreview();
+    }
+    
+    // Role selection
+    document.querySelectorAll('.role-option').forEach(option => {
+      option.addEventListener('click', () => {
+        document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        selectedRole = option.dataset.role;
+        updatePreview();
+      });
+    });
+    
+    // Update preview
+    function updatePreview() {
+      const name = document.getElementById('name').value || '[NOOSE] Dimi';
+      const dept = document.getElementById('department').value || 'National Office Of Security Enforcement';
+      
+      const previewName = document.getElementById('previewName');
+      const previewDept = document.getElementById('previewDept');
+      
+      previewName.textContent = name;
+      previewName.className = `preview-name ${selectedRole}`;
+      previewDept.textContent = dept;
+    }
+    
+    
+    // Auto-update preview on input
+    document.getElementById('name').addEventListener('input', updatePreview);
+    document.getElementById('department').addEventListener('input', updatePreview);
+    
+    // Preview position button
+    document.getElementById('testPositionBtn').addEventListener('click', async () => {
+      const config = {
+        name: document.getElementById('name').value,
+        role: selectedRole,
+        department: document.getElementById('department').value,
+        timezone: document.getElementById('timezone').value,
+        logoUrl: document.getElementById('logoUrl').value || '',
+        headerText: document.getElementById('headerText').value || 'CnR Body Cam 1™',
+        overlayWidth: parseInt(document.getElementById('overlayWidth').value) || 380,
+        overlayHeight: parseInt(document.getElementById('overlayHeight').value) || 130,
+        positionX: document.getElementById('positionX').value,
+        positionY: document.getElementById('positionY').value,
+        marginX: parseInt(document.getElementById('marginX').value) || 10,
+        marginY: parseInt(document.getElementById('marginY').value) || 10
+      };
+      
+      // Try to update position, if no overlay start it
+      const updated = await ipcRenderer.invoke('update-position', config);
+      if (!updated) {
+        // No overlay running, start it
+        await ipcRenderer.invoke('start-overlay', config);
+      }
+    });
+    
+    // Apply position button  
+    document.getElementById('applyPositionBtn').addEventListener('click', async () => {
+      const config = {
+        name: document.getElementById('name').value,
+        role: selectedRole,
+        department: document.getElementById('department').value,
+        timezone: document.getElementById('timezone').value,
+        logoUrl: document.getElementById('logoUrl').value || '',
+        overlayWidth: parseInt(document.getElementById('overlayWidth').value) || 350,
+        overlayHeight: parseInt(document.getElementById('overlayHeight').value) || 120,
+        positionX: document.getElementById('positionX').value,
+        positionY: document.getElementById('positionY').value,
+        marginX: parseInt(document.getElementById('marginX').value) || 10,
+        marginY: parseInt(document.getElementById('marginY').value) || 10
+      };
+      await ipcRenderer.invoke('save-config', config);
+      alert('✅ Position saved!');
+    });
+    
+    // Form submission
+    document.getElementById('setupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const config = {
+        name: document.getElementById('name').value,
+        role: selectedRole,
+        department: document.getElementById('department').value,
+        timezone: document.getElementById('timezone').value,
+        logoUrl: document.getElementById('logoUrl').value || '',
+        headerText: document.getElementById('headerText').value || 'CnR Body Cam 1™',
+        overlayWidth: parseInt(document.getElementById('overlayWidth').value) || 380,
+        overlayHeight: parseInt(document.getElementById('overlayHeight').value) || 130,
+        positionX: document.getElementById('positionX').value,
+        positionY: document.getElementById('positionY').value,
+        marginX: parseInt(document.getElementById('marginX').value) || 10,
+        marginY: parseInt(document.getElementById('marginY').value) || 10
+      };
+      
+      await ipcRenderer.invoke('save-config', config);
+      await ipcRenderer.invoke('start-overlay', config);
+      await ipcRenderer.invoke('hide-setup');
+    });
+    
+    // Load config on startup
+    loadConfig();
+  </script>
+</body>
+</html>

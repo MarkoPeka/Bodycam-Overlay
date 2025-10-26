@@ -1,0 +1,38 @@
+{
+  "name": "bodycam-overlay-app",
+  "version": "0.1.0",
+  "description": "Professional bodycam overlay for streaming and roleplay",
+  "author": "marko28peka",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "build": "electron-builder --win --x64",
+    "build-portable": "electron-builder --win portable --x64",
+    "package": "electron-packager . BodycamOverlay --platform=win32 --arch=x64 --out=dist --overwrite --ignore=\"node_modules/.cache|dist|.git\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.6.0",
+    "electron-packager": "^17.1.2"
+  },
+  "build": {
+    "appId": "com.marko28peka.bodycamoverlay",
+    "productName": "Bodycam Overlay",
+    "copyright": "Copyright © 2025 marko28peka",
+    "files": [
+      "**/*",
+      "!dist",
+      "!.git"
+    ],
+    "win": {
+      "target": "portable",
+      "artifactName": "BodycamOverlay-Setup.exe"
+    },
+    "electronDist": "node_modules/electron/dist",
+    "electronVersion": "30.0.0",
+    "forceCodeSigning": false
+  }
+}

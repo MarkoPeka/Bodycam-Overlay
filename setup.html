@@ -365,6 +365,10 @@
       <div class="form-group">
         <label for="logoUrl">Logo URL (Optional):</label>
         <input type="url" id="logoUrl" placeholder="https://example.com/logo.png">
+        <div style="display:flex;align-items:center;margin-top:8px;">
+          <input type="checkbox" id="roundedLogo" checked style="width:auto;margin-right:5px;">
+          <label for="roundedLogo" style="display:inline;margin:0;">Rounded Logo</label>
+        </div>
         <small style="color: #aaa; font-size: 12px; margin-top: 5px; display: block;">💡 Leave empty for default NOOSE logo, or paste any image URL</small>
       </div>
 
@@ -467,6 +471,7 @@
       document.getElementById('department').value = config.department;
       document.getElementById('timezone').value = config.timezone;
       document.getElementById('logoUrl').value = config.logoUrl || '';
+	  document.getElementById('roundedLogo').value = config.roundedLogo || '';
       document.getElementById('headerText').value = config.headerText || 'CnR Body Cam 1™';
       document.getElementById('overlayWidth').value = config.overlayWidth || 380;
       document.getElementById('overlayHeight').value = config.overlayHeight || 130;
@@ -523,6 +528,7 @@
         department: document.getElementById('department').value,
         timezone: document.getElementById('timezone').value,
         logoUrl: document.getElementById('logoUrl').value || '',
+		    roundedLogo: document.getElementById('roundedLogo').checked,
         headerText: document.getElementById('headerText').value || 'CnR Body Cam 1™',
         overlayWidth: parseInt(document.getElementById('overlayWidth').value) || 380,
         overlayHeight: parseInt(document.getElementById('overlayHeight').value) || 130,
@@ -548,6 +554,7 @@
         department: document.getElementById('department').value,
         timezone: document.getElementById('timezone').value,
         logoUrl: document.getElementById('logoUrl').value || '',
+		    roundedLogo: document.getElementById('roundedLogo').checked,
         overlayWidth: parseInt(document.getElementById('overlayWidth').value) || 350,
         overlayHeight: parseInt(document.getElementById('overlayHeight').value) || 120,
         positionX: document.getElementById('positionX').value,
@@ -569,6 +576,7 @@
         department: document.getElementById('department').value,
         timezone: document.getElementById('timezone').value,
         logoUrl: document.getElementById('logoUrl').value || '',
+        roundedLogo: document.getElementById('roundedLogo').checked,
         headerText: document.getElementById('headerText').value || 'CnR Body Cam 1™',
         overlayWidth: parseInt(document.getElementById('overlayWidth').value) || 380,
         overlayHeight: parseInt(document.getElementById('overlayHeight').value) || 130,

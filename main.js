@@ -19,6 +19,7 @@ function loadConfig() {
     timezone: 'America/New_York',
     department: 'National Office Of Security Enforcement',
     logoUrl: '',
+	roundedLogo: true,
     headerText: 'CnR Body Cam 1™',
     overlayWidth: 380,
     overlayHeight: 130,

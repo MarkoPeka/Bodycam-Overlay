@@ -158,19 +158,29 @@
       transform: translateY(-50%);
       width: 55px; height: 55px;
       border-radius: 50%;
-      overflow: hidden;
-      background: rgba(255,255,255,0.05);
       display: grid; 
       place-items: center;
       box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      z-index: 3;
     }
-    
-    .logo-wrap img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
+
+    .logo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .logo-wrap img {
+      width: 100%;
+      object-fit: cover;
       filter: contrast(1.1) saturate(1.2) brightness(1.1);
       transition: filter 0.3s ease;
+      overflow: hidden;
     }
 
     .logo-wrap:hover img {
@@ -220,6 +230,8 @@
     let playerNameEl = document.getElementById('playerName');
     let playerDeptEl = document.getElementById('playerDept');
     let headerTextEl = document.getElementById('headerText');
+	  let logoImg = document.querySelector('.logo-wrap img');
+	  let logoWrap = document.querySelector('.logo-wrap');
     
     // Request config on load
     (async () => {
@@ -277,6 +289,11 @@
       // Update department
       playerDeptEl.textContent = currentConfig.department;
       
+	    // Update logo circle
+		  document.querySelector('.logo-wrap').style.overflow = currentConfig.roundedLogo ? "hidden" : '';
+		  document.querySelector('.logo-wrap').style.background = currentConfig.roundedLogo ? "rgba(255, 255, 255, 0.05)" : '';
+		  logoImg.style.height = currentConfig.roundedLogo ? "100%" : '';
+
       // Update header text
       if (currentConfig.headerText) {
         headerTextEl.textContent = currentConfig.headerText;
